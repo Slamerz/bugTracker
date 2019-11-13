@@ -1,0 +1,118 @@
+{% if messages %}
+<ul class="messages">
+  {% for message in messages %}
+  <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+  {% endfor %}
+</ul>
+{% endif %}
+
+<a href="/logout/">LOGOUT</a>
+<a href="/register/">REGISTER NEW USER</a>
+<h1>Bug Tracker Homepage</h1>
+<h3><a href="/addticket/">CREATE NEW TICKET</a></h3>
+<h3>New Tickets</h3>
+<ul>
+  {% for ticket in new_tickets %}
+  <li>
+    <p>
+      <a href="/ticket/{{ticket.id}}">{{ticket.title}}</a> -
+      {{ticket.description}}
+    </p>
+    <p>Status: {{ticket.status}}</p>
+    <p>
+      Filed By: <a href="/user/{{ticket.filed_by.id}}">{{ticket.filed_by}}</a> -
+      {{ticket.posted_date}}
+    </p>
+    <p>Assigned to: {{ticket.assigned_to}}</p>
+    <p>Completed by: {{ticket.completed_by}}</p>
+    <a href="/assign/{{ticket.id}}">Assign</a>
+    <a href="/edit/{{ticket.id}}">Edit</a>
+    <a href="/invalidate/{{ticket.id}}">Invalidate</a>
+  </li>
+  {% endfor %}
+</ul>
+
+<h3>In Progress</h3>
+
+<ul>
+  {% for ticket in assigned_tickets %}
+  <li>
+    <p>
+      <a href="/ticket/{{ticket.id}}">{{ticket.title}}</a> -
+      {{ticket.description}}
+    </p>
+    <p>Status: {{ticket.status}}</p>
+    <p>
+      Filed By: <a href="/user/{{ticket.filed_by.id}}">{{ticket.filed_by}}</a> -
+      {{ticket.posted_date}}
+    </p>
+
+    <p>
+      Assigned To:
+      <a href="/user/{{ticket.assigned_to.id}}">{{ticket.assigned_to}}</a>
+    </p>
+    <p>Completed by: {{ticket.completed_by}}</p>
+    {% if ticket.completed_by %}
+    <p>
+      Completed By:
+      <a href="/user/{{ticket.completed_by.id}}">{{ticket.completed_by}}</a>
+    </p>
+    {% endif %}
+    <a href="/complete/{{ticket.id}}">Complete</a>
+    <a href="/unassign/{{ticket.id}}">Unassign</a>
+    <a href="/edit/{{ticket.id}}">Edit</a>
+    <a href="/invalidate/{{ticket.id}}">Invalidate</a>
+  </li>
+  {% endfor %}
+</ul>
+
+<h3>Completed Tickets</h3>
+
+<ul>
+  {% for ticket in completed_tickets %}
+  <li>
+    <p>
+      <a href="/ticket/{{ticket.id}}">{{ticket.title}}</a> -
+      {{ticket.description}}
+    </p>
+    <p>Status: {{ticket.status}}</p>
+    <p>
+      Filed By: <a href="/user/{{ticket.filed_by.id}}">{{ticket.filed_by}}</a> -
+      {{ticket.posted_date}}
+    </p>
+    <p>
+      Assigned To: {% if ticket.assigned_to %}
+      <a href="/user/{{ticket.assigned_to.id}}">{{ticket.assigned_to}}</a>
+      {% else %} {{ticket.assigned_to}} {% endif %}
+    </p>
+    <p>
+      Completed By:
+      <a href="/user/{{ticket.completed_by.id}}">{{ticket.completed_by}}</a>
+    </p>
+    <a href="/incomplete/{{ticket.id}}">Incomplete</a>
+    <a href="/edit/{{ticket.id}}">Edit</a>
+  </li>
+  {% endfor %}
+</ul>
+
+<h3>Invalid Tickets</h3>
+
+<ul>
+  {% for ticket in invalid_tickets %}
+  <li>
+    <p>
+      <a href="/ticket/{{ticket.id}}">{{ticket.title}}</a> -
+      {{ticket.description}}
+    </p>
+    <p>Status: {{ticket.status}}</p>
+    <p>
+      Filed By: <a href="/user/{{ticket.filed_by.id}}">{{ticket.filed_by}}</a> -
+      {{ticket.posted_date}}
+    </p>
+    <p>Assigned to: {{ticket.assigned_to}}</p>
+    <p>Completed by: {{ticket.completed_by}}</p>
+    <a href="/edit/{{ticket.id}}">Edit</a>
+    <a href="validate/{{ticket.id}}">Validate</a>
+  </li>
+  {% endfor %}
+</ul>
