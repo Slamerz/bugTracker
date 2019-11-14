@@ -107,9 +107,6 @@ def user_detail_view(request, id):
 
     return render(request, html, {
         'user': user,
-        'filed': filed,
-        'assigned': assigned,
-        'completed': completed,
         'ticket_types': ticket_types})
 
 
