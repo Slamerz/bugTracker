@@ -1,35 +1,46 @@
 <a href="/">Return to homepage</a>
 <h1>{{user.username}}</h1>
+
 {% if user.email %}
-<h3>{{user.email}}</h3>
-{% endif %} {% for header, ticket_type in ticket_types %}
-<h3>{{header}}{{user.username}}</h3>
-<ul>
-  {% for ticket in ticket_type %}
-  <li>
-    <p>
-      <a href="/ticket/{{ticket.id}}">{{ticket.title}}</a> -
-      {{ticket.description}}
-    </p>
-    <p>Status: {{ticket.status}}</p>
-    <p>
-      Filed by: {% if user.id != ticket.filed_by.id %}
-      <a href="/user/{{ticket.filed_by.id}}">
-        {{ticket.filed_by}}
-      </a>
-      {% else %} {{ticket.filed_by}} {% endif %} - {{ticket.posted_date}}
-    </p>
-    <p>
-      Assigned to: {% if ticket.assigned_to and user.id != ticket.assigned_to.id %}
-      <a href="/user/{{ticket.assigned_to.id}}">{{ticket.assigned_to}}</a>
-      {% else %} {{ticket.assigned_to}} {% endif %}
-    </p>
-    <p>
-      Completed by: {% if ticket.completed_by and user.id != ticket.completed_by.id %}
-      <a href="/user/{{ticket.completed_by.id}}">{{ticket.completed_by}}</a>
-      {% else %}{{ticket.completed_by}}{% endif %}
-    </p>
-  </li>
-  {% endfor %}
-</ul>
+    <h3>{{user.email}}</h3>
+{% endif %}
+
+{% for header, ticket_type in ticket_types %}
+    <h3>{{header}}{{user.username}}</h3>
+    <ul>
+    {% for ticket in ticket_type %}
+        <li>
+            <p>
+            <a href="/ticket/{{ticket.id}}">{{ticket.title}}</a> -
+            {{ticket.description}}
+            </p>
+            <p>Status: {{ticket.status}}</p>
+            <p>
+                Filed by: 
+                {% if user.id != ticket.filed_by.id %}
+                    <a href="/user/{{ticket.filed_by.id}}">{{ticket.filed_by}}</a>
+                {% else %}
+                    {{ticket.filed_by}}
+                {% endif %}
+                - {{ticket.posted_date}}
+            </p>
+            <p>
+                Assigned to:
+                {% if ticket.assigned_to and user.id != ticket.assigned_to.id %}
+                    <a href="/user/{{ticket.assigned_to.id}}">{{ticket.assigned_to}}</a>
+                {% else %}
+                    {{ticket.assigned_to}}
+                {% endif %}
+            </p>
+            <p>
+                Completed by: 
+                {% if ticket.completed_by and user.id != ticket.completed_by.id %}
+                    <a href="/user/{{ticket.completed_by.id}}">{{ticket.completed_by}}</a>
+                {% else %}
+                    {{ticket.completed_by}}
+                {% endif %}
+            </p>
+        </li>
+    {% endfor %}
+    </ul>
 {% endfor %}
