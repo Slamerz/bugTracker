@@ -19,7 +19,9 @@
 <a href="/edit/{{ticket.id}}">Edit</a>
 <a href="/invalidate/{{ticket.id}}">Invalidate</a>
 {% endif %} {% if ticket.status == 'In Progress' %}
+{% if ticket.assigned_to.id == current_user_id %}
 <a href="/complete/{{ticket.id}}">Complete</a>
+{% endif %}
 <a href="/unassign/{{ticket.id}}">Unassign</a>
 <a href="/edit/{{ticket.id}}">Edit</a>
 <a href="/invalidate/{{ticket.id}}">Invalidate</a>
