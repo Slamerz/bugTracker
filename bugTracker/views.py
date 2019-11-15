@@ -85,7 +85,7 @@ def create_new_ticket(request):
         ticket = form.save()
         ticket.filed_by = request.user
         ticket.save()
-        return HttpResponseRedirect(reverse('homepage'))
+        return HttpResponseRedirect(reverse('ticket', args=(ticket.id,)))
 
     form = NewTicketForm()
     return render(request, html, {'form': form})
@@ -131,7 +131,7 @@ def ticket_edit(request, id):
     if request.method == 'POST':
         form = NewTicketForm(request.POST, instance=instance)
         form.save()
-        return HttpResponseRedirect(reverse('homepage'))
+        return HttpResponseRedirect(reverse('ticket', args=(instance.id,)))
 
     form = NewTicketForm(instance=instance)
     return render(request, html, {'form': form})
@@ -143,7 +143,7 @@ def unassign_ticket(request, id):
     ticket.status = 'New'
     ticket.assigned_to = None
     ticket.save()
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    return HttpResponseRedirect(reverse('ticket', args=(ticket.id,)))
 
 
 @login_required
@@ -153,7 +153,7 @@ def uncomplete_ticket(request, id):
     ticket.assigned_to = ticket.completed_by
     ticket.completed_by = None
     ticket.save()
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    return HttpResponseRedirect(reverse('ticket', args=(ticket.id,)))
 
 
 @login_required
@@ -162,7 +162,7 @@ def assign_ticket(request, id):
     ticket.status = 'In Progress'
     ticket.assigned_to = request.user
     ticket.save()
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    return HttpResponseRedirect(reverse('ticket', args=(ticket.id,)))
     # html = 'generic_form_view.html'
 
     # instance = Ticket.objects.get(pk=id)
@@ -189,7 +189,7 @@ def complete_ticket(request, id):
     ticket.completed_by = ticket.assigned_to
     ticket.assigned_to = None
     ticket.save()
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    return HttpResponseRedirect(reverse('ticket', args=(ticket.id,)))
     # html = 'generic_form_view.html'
 
     # instance = Ticket.objects.get(pk=id)
@@ -213,7 +213,7 @@ def mark_ticket_invalid(request, id):
     ticket.completed_by = None
     ticket.assigned_to = None
     ticket.save()
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    return HttpResponseRedirect(reverse('ticket', args=(ticket.id,)))
 
 
 @login_required
@@ -221,4 +221,4 @@ def make_invalid_ticket_valid(request, id):
     ticket = Ticket.objects.get(pk=id)
     ticket.status = 'New'
     ticket.save()
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    return HttpResponseRedirect(reverse('ticket', args=(ticket.id,)))

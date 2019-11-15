@@ -37,5 +37,5 @@ urlpatterns = [
     path('unassign/<int:id>', views.unassign_ticket),
     path('incomplete/<int:id>', views.uncomplete_ticket),
     path('validate/<int:id>', views.make_invalid_ticket_valid),
-    path('ticket/<int:id>', views.ticket_detail_view)
+    path('ticket/<int:id>', views.ticket_detail_view, name='ticket')
 ]
